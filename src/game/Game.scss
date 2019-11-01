@@ -36,18 +36,18 @@
 		background: url('../assets/wheel.png') no-repeat;
 		position: absolute;
 		bottom: 0px;
-    left: 100%;
+    left: 800px;
     z-index: 3;
-    animation: spin 2s linear infinite;
-    animation-direction: reverse;
+    /*animation: spin 2s linear infinite;
+    animation-direction: reverse;*/
 
-    &.move {
+    /*&.move {
     	animation-name: spin, move;
     	animation-duration: 1s, 5s;
     	animation-iteration-count: infinite, 1;
     	animation-timing-function: linear, linear;
       animation-direction: reverse, normal;
-    }
+    }*/
 	}
 
 	.cowboy {
