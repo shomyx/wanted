@@ -1,102 +1,92 @@
 @keyframes spin { 
   100% {
-  	transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 @keyframes move { 
-	from {
-		left: 800px;
-	}
+  from {
+      left: 800px;
+  }
   to {
-  	left: -200px;
+    left: -200px;
   }
 }
 
 .game {
-	width: 743px;
-	height: 550px;
-	background: url('../assets/background.jpg') no-repeat;
-	margin: auto;
-	overflow: hidden;
-	position: relative;
+  width: 743px;
+  height: 550px;
+  background: url('../assets/background.jpg') no-repeat;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
 
-	.hat {
-		width: 213px;
-		height: 124px;
-		background: url('../assets/hat.png') no-repeat;
-		position: absolute;
-		bottom: 270px;
+  .hat {
+    width: 213px;
+    height: 124px;
+    background: url('../assets/hat.png') no-repeat;
+    position: absolute;
+    bottom: 270px;
     left: 271px;
     z-index: 0;
-	}
+  }
 
-	.tumbleweed {
-		width: 180px;
-		height: 180px;
-		background: url('../assets/wheel.png') no-repeat;
-		position: absolute;
-		bottom: 0px;
+  .tumbleweed {
+    width: 180px;
+    height: 180px;
+    background: url('../assets/wheel.png') no-repeat;
+    position: absolute;
+    bottom: 0px;
     left: 800px;
     z-index: 3;
-    /*animation: spin 2s linear infinite;
-    animation-direction: reverse;*/
+  }
 
-    /*&.move {
-    	animation-name: spin, move;
-    	animation-duration: 1s, 5s;
-    	animation-iteration-count: infinite, 1;
-    	animation-timing-function: linear, linear;
-      animation-direction: reverse, normal;
-    }*/
-	}
-
-	.cowboy {
-		width: 298px;
-		height: 380px;
-		background: url('../assets/idle.png') no-repeat;
-		position: absolute;
-		bottom: 20px;
+  .cowboy {
+    width: 298px;
+    height: 380px;
+    background: url('../assets/idle.png') no-repeat;
+    position: absolute;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
 
     &.lost {
-			background: url('../assets/lost.png') no-repeat;
+      background: url('../assets/lost.png') no-repeat;
     }
     &.won {
-			background: url('../assets/won.png') no-repeat;
+      background: url('../assets/won.png') no-repeat;
     }
-	}
+  }
 
-	.bullets {
-		width: 743px;
-		height: 414px;
-		background: url('../assets/bullet-holes.png') no-repeat;
-		position: absolute;
-		top: 50%;
+  .bullets {
+    width: 743px;
+    height: 414px;
+    background: url('../assets/bullet-holes.png') no-repeat;
+    position: absolute;
+    top: 50%;
     transform: translateY(-50%);
     z-index: 2;
     display: none;
-	}
+  }
 
-	.guns {
-		position: absolute;
+  .guns {
+    position: absolute;
     bottom: 0;
     display: flex;
     width: 100%;
     justify-content: space-between;
 
-		.gun {
-			cursor: pointer;
-			width: 218px;
-			height: 232px;
+    .gun {
+      cursor: pointer;
+      width: 218px;
+      height: 232px;
 
-			&.left-gun {
-				background: url('../assets/left.png') no-repeat;
-	    }
-	    &.right-gun {
-				background: url('../assets/right.png') no-repeat;
-	    }
-		}
-	}
+      &.left-gun {
+        background: url('../assets/left.png') no-repeat;
+      }
+      &.right-gun {
+        background: url('../assets/right.png') no-repeat;
+      }
+    }
+  }
 }

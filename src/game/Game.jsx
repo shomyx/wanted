@@ -6,26 +6,37 @@ import './Game.scss';
 export const Game = () => {
 	let weed = useRef(null);
 
-	useEffect(() => {
-  	setupAnimations();
-	}, []);
-
   let animations = new TimelineLite({ paused: true });
 
-  const setupAnimations = () => {
-  	animations.to(weed, 1, {
-        repeat: -1,
-        rotation: -360,
-        ease: Linear.easeNone
-      }
-    ).to(weed, 5, {
-        x: -1000,
-        ease: Linear.easeNone
-      }
-    );
+  const rollTheWeed = () => {
+  	return new Promise((resolve) => {
+	  	animations.to(weed, 1, {
+	        repeat: -1,
+	        rotation: -360,
+	        ease: Linear.easeNone
+	      }
+	    ).to(weed, 5, {
+	        x: -1000,
+	        ease: Linear.easeNone,
+	      }
+	    ).to(weed, 0, {
+	        x: 0,
+	        ease: Linear.easeNone,
+	        onComplete: () => {
+	        	animations.clear();
+	        	resolve();
+	        },
+	      }
+	    ).play();
+  	});
   };
 
-  const start = () => animations.play();
+  const startAnimation = async () => {
+  	await rollTheWeed();
+  	alert('Bla');
+  };
+
+  const start = () => startAnimation();
   
   const pause = () => animations.stop();
 
