@@ -10,24 +10,26 @@ export const Game = () => {
 
   const rollTheWeed = () => {
   	return new Promise((resolve) => {
-	  	animations.to(weed, 1, {
-	        repeat: -1,
-	        rotation: -360,
-	        ease: Linear.easeNone
-	      }
-	    ).to(weed, 5, {
+	  	animations
+	  		.to(weed, 1, {
+        	repeat: -1,
+        	rotation: -360,
+        	ease: Linear.easeNone
+      	})
+      	.to(weed, 5, {
 	        x: -1000,
 	        ease: Linear.easeNone,
-	      }
-	    ).to(weed, 0, {
+	      })
+	      .to(weed, 0, {
 	        x: 0,
 	        ease: Linear.easeNone,
+	        delay: 2,
 	        onComplete: () => {
 	        	animations.clear();
 	        	resolve();
 	        },
-	      }
-	    ).play();
+	      })
+	      .play();
   	});
   };
 
