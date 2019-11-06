@@ -25,7 +25,7 @@
     height: 124px;
     background: url('../assets/hat.png') no-repeat;
     position: absolute;
-    bottom: 270px;
+    bottom: 269px;
     left: 271px;
     z-index: 0;
   }
@@ -43,13 +43,15 @@
   .cowboy {
     width: 298px;
     height: 380px;
-    background: url('../assets/idle.png') no-repeat;
     position: absolute;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
 
+    &.idle {
+      background: url('../assets/idle.png') no-repeat;
+    }
     &.lost {
       background: url('../assets/lost.png') no-repeat;
     }
