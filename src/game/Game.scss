@@ -33,6 +33,24 @@
   overflow: hidden;
   position: relative;
 
+  .stats {
+    position: absolute;
+    top: 35px;
+    width: 130px;
+    text-align: center;
+    font-family: 'Arial';
+    font-size: 20px;
+    font-weight: bold;
+    color: wheat;
+
+    &.win-amount {
+      left: 65px;
+    }
+    &.balance {
+      right: 65px;
+    }
+  }
+
   .hat {
     width: 213px;
     height: 124px;

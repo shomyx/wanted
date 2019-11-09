@@ -1,84 +1,120 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { TweenMax } from 'gsap';
 
 import * as Animations from './Animations';
+import * as Config from './Config';
+import { GameStats } from './components/GameStats';
 import './Game.scss';
 
+let _count = {val: 0};
+
 export const Game = () => {
-  const [result, setResult] = useState(null);
-  const [choice, setChoice] = useState(null);
+  const [test, setTest] = useState(0);
+
+  useEffect(() => {
+    TweenMax.to(_count, 5, {
+      val:10,
+      onUpdate: () => setTest(_count.val.toFixed(0))
+    });
+  });
+
+  const choiceObj = {
+    choice: null,
+    balance: Config.START_BALANCE,
+  };
+
+  const outcomeObj = {
+    outcome: null,
+    win: 0,
+  };
+  
+  const [outcome, setOutcome] = useState(choiceObj);
+  const [result, setResult] = useState(outcomeObj);
 
   let weed = useRef(null);
-	let hat = useRef(null);
+  let hat = useRef(null);
+  let win = useRef(null);
+	let balance = useRef(null);
+
+  useEffect(() => {
+    if (outcome.choice) {
+      Animations.rotateAndMove(weed, shoot);
+    }
+  }, [outcome]);
 
   useEffect(() => {
     playOutcome();
   }, [result]);
 
-  useEffect(() => {
-    if (choice) {
-      Animations.rotateAndMove(weed, shoot);
-    }
-  }, [choice]);
-
   const shoot = () => {
     const rand = Math.floor(Math.random() * 10) + 1;
     const outcome = (rand > 5) ? 'won' : 'lost';
-    setResult(outcome);
+    const win = (rand > 5) ? Config.ON_WIN : 0;
+    
+    setResult({
+      outcome: outcome,
+      win: win,
+    });
   };
 
   const playOutcome = () => {
-    if (!result) {
+    if (!result.outcome) {
       return;
     }
-    if (result === 'won') {
-      Animations.flyAway(hat, getHatSettings());
+    if (result.outcome === 'won') {
+      Animations.flyAway(hat, outcome.choice);
     } else {
       // alert("YOU'VE LOST");
     }
   };
 
-  const getHatSettings = () => {
-    const settings = {};
+  const prepareOutcome = (choice) => {
+    const newState = { ...outcome };
 
-    switch (choice) {
-      case 'left':
-        settings.path = [{x:0, y:0}, {x:100, y:-50}, {x:200, y:-80}, {x:300, y:-100}, {x:500, y:-120}];
-        settings.rotation = 360;
-        break;
-      case 'right':
-        settings.path = [{x:0, y:0}, {x:-100, y:-50}, {x:-200, y:-80}, {x:-300, y:-100}, {x:-500, y:-120}];
-        settings.rotation = -360;
-        break;
-      default:
-        settings.path = [];
-        settings.rotation = 0;
-    }
+    newState.choice = choice;
+    newState.balance = newState.balance - Config.ROUND_FEE;
 
-    return settings;
+    setOutcome(newState);
   };
 
 	return (
 		<div className="game">
+      <GameStats
+        className="stats win-amount"
+        value={result.win}
+      />
+      <GameStats
+        className="stats balance"
+        value={outcome.balance}
+      />
+
 			<div className="bullets"></div>
+
 			<div
         className="hat"
         ref={elem => hat = elem}
       ></div>
-			<div className={`cowboy ${result ? result : 'idle'}`}></div>
+
+			<div className={`cowboy ${result.outcome ? result.outcome : 'idle'}`}></div>
+
 			<div className="guns">
 				<div
 					className="gun left-gun"
-					onClick={() => setChoice('left')}
+					onClick={() => prepareOutcome('left')}
 				></div>
 				<div
 					className="gun right-gun"
-          onClick={() => setChoice('right')}
+          onClick={() => prepareOutcome('right')}
 				></div>
 			</div>
+
 			<div
 			  className="tumbleweed"
 			  ref={elem => weed = elem}
 			 ></div>
+
+    <span>{test}</span>
+
 		</div>
 	);
 };
