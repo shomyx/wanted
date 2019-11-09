@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TweenMax } from 'gsap';
+import { TweenMax, Power1 } from 'gsap';
 
 import * as Animations from './Animations';
 import * as Config from './Config';
@@ -12,9 +12,10 @@ export const Game = () => {
   const [test, setTest] = useState(0);
 
   useEffect(() => {
-    TweenMax.to(_count, 5, {
+    TweenMax.to(_count, 2, {
       val:10,
-      onUpdate: () => setTest(_count.val.toFixed(0))
+      onUpdate: () => setTest(_count.val.toFixed(0)),
+      ease: Power1.easeOut,
     });
   });
 
