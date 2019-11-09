@@ -15,7 +15,7 @@
 .game {
   width: 743px;
   height: 550px;
-  background: url('../assets/background.jpg') no-repeat;
+  background: url('../assets/img/background.jpg') no-repeat;
   margin: auto;
   overflow: hidden;
   position: relative;
@@ -23,7 +23,7 @@
   .hat {
     width: 213px;
     height: 124px;
-    background: url('../assets/hat.png') no-repeat;
+    background: url('../assets/img/hat.png') no-repeat;
     position: absolute;
     bottom: 269px;
     left: 271px;
@@ -33,7 +33,7 @@
   .tumbleweed {
     width: 180px;
     height: 180px;
-    background: url('../assets/wheel.png') no-repeat;
+    background: url('../assets/img/wheel.png') no-repeat;
     position: absolute;
     bottom: 0px;
     left: 800px;
@@ -50,20 +50,20 @@
     z-index: 1;
 
     &.idle {
-      background: url('../assets/idle.png') no-repeat;
+      background: url('../assets/img/idle.png') no-repeat;
     }
     &.lost {
-      background: url('../assets/lost.png') no-repeat;
+      background: url('../assets/img/lost.png') no-repeat;
     }
     &.won {
-      background: url('../assets/won.png') no-repeat;
+      background: url('../assets/img/won.png') no-repeat;
     }
   }
 
   .bullets {
     width: 743px;
     height: 414px;
-    background: url('../assets/bullet-holes.png') no-repeat;
+    background: url('../assets/img/bullet-holes.png') no-repeat;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -84,10 +84,10 @@
       height: 232px;
 
       &.left-gun {
-        background: url('../assets/left.png') no-repeat;
+        background: url('../assets/img/left.png') no-repeat;
       }
       &.right-gun {
-        background: url('../assets/right.png') no-repeat;
+        background: url('../assets/img/right.png') no-repeat;
       }
     }
   }
