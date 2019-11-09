@@ -1,3 +1,16 @@
+
+@font-face {
+  font-family: 'Durango';
+  src: url('../assets/fonts/western.eot');
+  src: url('../assets/fonts/western.eot?#iefix') format('embedded-opentype'),
+       url('../assets/fonts/western.woff2') format('woff2'),
+       url('../assets/fonts/western.woff') format('woff'),
+       url('../assets/fonts/western.ttf') format('truetype'),
+       url('../assets/fonts/western.svg#durango_western_erodedregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @keyframes spin { 
   100% {
     transform: rotate(360deg);

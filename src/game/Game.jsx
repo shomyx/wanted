@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TweenMax, TimelineLite, Linear } from 'gsap';
 
+import * as Animations from './Animations';
 import './Game.scss';
 
 export const Game = () => {
@@ -16,11 +16,9 @@ export const Game = () => {
 
   useEffect(() => {
     if (choice) {
-      rollTheWeed();
+      Animations.rotateAndMove(weed, shoot);
     }
   }, [choice]);
-
-  let animations = new TimelineLite({ paused: true });
 
   const shoot = () => {
     const rand = Math.floor(Math.random() * 10) + 1;
@@ -33,33 +31,10 @@ export const Game = () => {
       return;
     }
     if (result === 'won') {
-      flyTheHat();
+      Animations.flyAway(hat, getHatSettings());
     } else {
       // alert("YOU'VE LOST");
     }
-  };
-
-  const rollTheWeed = () => {
-  	animations
-  		.to(weed, 1, {
-      	repeat: -1,
-      	rotation: -360,
-      	ease: Linear.easeNone
-    	})
-    	.to(weed, 5, {
-        x: -1000,
-        ease: Linear.easeNone,
-      }, 0)
-      .to(weed, 0, {
-        x: 0,
-        ease: Linear.easeNone,
-        delay: 2,
-        onComplete: () => {
-        	animations.clear();
-          shoot();
-        },
-      })
-      .play();
   };
 
   const getHatSettings = () => {
@@ -80,23 +55,6 @@ export const Game = () => {
     }
 
     return settings;
-  };
-
-  const flyTheHat = () => {
-    const params = getHatSettings();
-    animations
-      .to(hat, 1.5, {
-        bezier:{curviness: 3, values: params.path},
-        scale: 0.3,
-        ease:Linear.easeOut,
-        onComplete: () => animations.stop(),
-      })
-      .to(hat, 1, {
-        repeat: -1,
-        rotation: params.rotation,
-        ease: Linear.easeNone
-      },'-=1.5');
-    animations.play();
   };
 
 	return (
