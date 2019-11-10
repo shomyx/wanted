@@ -47,8 +47,12 @@ export const Game = () => {
   const collectWin = () => setCollect(true);
 
   const onCollectDone = (balance) => {
-    setCollect(false);
-    setOutcome({ ...choiceObj, balance: balance });
+    setTimeout(() => {
+      Animations.clearAnimations(weed, hat);
+      setCollect(false);
+      setOutcome({ ...choiceObj, balance: balance });
+      setResult({...outcomeObj});
+    }, 4000);
   };
 
   const playOutcome = () => {
@@ -58,7 +62,10 @@ export const Game = () => {
     if (result.outcome === 'won') {
       Animations.flyAway(hat, outcome.choice, collectWin);
     } else {
-      // alert("YOU'VE LOST");
+      setTimeout(() => {
+        Animations.clearAnimations(weed, hat);
+        setResult({...outcomeObj})
+      }, 4000);
     }
   };
 
@@ -87,7 +94,7 @@ export const Game = () => {
         onChange={onCollectDone}
       />
 
-			<div className="bullets"></div>
+			{ (result.outcome && result.outcome === 'lost') && <div className="bullets"></div> }
 
 			<div
         className="hat"

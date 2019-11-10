@@ -74,3 +74,9 @@ export const animateNumber = (obj, toVal, update, callback) => {
     onComplete: () => callback && callback(toVal),
   });
 };
+
+export const clearAnimations = (weed, hat) => {
+  animations.kill()
+    .set(weed, { clearProps: "all" })
+    .set(hat, { clearProps: "all" });
+};
