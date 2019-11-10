@@ -45,7 +45,7 @@ export const rotateAndMove = (item, callback) => {
     .play();
 };
 
-export const flyAway = (item, choice) => {
+export const flyAway = (item, choice, callback) => {
   const params = getFlyAwayParams(choice);
 
   animations
@@ -53,7 +53,10 @@ export const flyAway = (item, choice) => {
       bezier:{curviness: 3, values: params.path},
       scale: 0.3,
       ease: Linear.easeOut,
-      onComplete: () => animations.stop(),
+      onComplete: () => {
+        animations.stop();
+        callback();
+      },
     })
     .to(item, 1, {
       repeat: -1,

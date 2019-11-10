@@ -31,11 +31,10 @@ export const Game = () => {
   
   const [outcome, setOutcome] = useState(choiceObj);
   const [result, setResult] = useState(outcomeObj);
+  const [collect, setCollect] = useState(false);
 
   let weed = useRef(null);
   let hat = useRef(null);
-  let win = useRef(null);
-	let balance = useRef(null);
 
   useEffect(() => {
     if (outcome.choice) {
@@ -58,12 +57,14 @@ export const Game = () => {
     });
   };
 
+  const collectWin = () => setCollect(true);
+
   const playOutcome = () => {
     if (!result.outcome) {
       return;
     }
     if (result.outcome === 'won') {
-      Animations.flyAway(hat, outcome.choice);
+      Animations.flyAway(hat, outcome.choice, collectWin);
     } else {
       // alert("YOU'VE LOST");
     }
@@ -83,10 +84,12 @@ export const Game = () => {
       <GameStats
         className="stats win-amount"
         value={result.win}
+        collect={collect}
       />
       <GameStats
         className="stats balance"
         value={outcome.balance}
+        collect={collect}
       />
 
 			<div className="bullets"></div>
