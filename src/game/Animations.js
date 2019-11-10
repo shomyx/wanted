@@ -1,4 +1,4 @@
-import { TweenMax, TimelineLite, Linear } from 'gsap';
+import { TweenMax, TimelineLite, Linear, Power1 } from 'gsap';
 
 let animations = new TimelineLite({ paused: true });
 
@@ -66,18 +66,11 @@ export const flyAway = (item, choice, callback) => {
     .play();
 };
 
-export const animateNumber = (num, update) => {
-
+export const animateNumber = (obj, toVal, update, callback) => {
+  TweenMax.to(obj, 2, {
+    val: toVal,
+    onUpdate: () => update(obj.val.toFixed(0)),
+    ease: Power1.easeOut,
+    onComplete: () => callback && callback(toVal),
+  });
 };
-// const updateHandler = (item) => {
-//   item.innerHTML = game.score;
-// };
-
-// export const score = (item) => {
-//   TweenLite.to(item, 1, {
-//     score:"+=20",
-//     roundProps: "score",
-//     onUpdate: updateHandler,
-//     ease:Linear.easeNone
-//   });
-// };

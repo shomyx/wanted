@@ -1,34 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TweenMax, Power1 } from 'gsap';
 
 import * as Animations from './Animations';
 import * as Config from './Config';
 import { GameStats } from './components/GameStats';
 import './Game.scss';
 
-let _count = {val: 0};
+const choiceObj = {
+  choice: null,
+  balance: Config.START_BALANCE,
+};
+
+const outcomeObj = {
+  outcome: null,
+  win: 0,
+};
 
 export const Game = () => {
-  const [test, setTest] = useState(0);
-
-  useEffect(() => {
-    TweenMax.to(_count, 2, {
-      val:10,
-      onUpdate: () => setTest(_count.val.toFixed(0)),
-      ease: Power1.easeOut,
-    });
-  });
-
-  const choiceObj = {
-    choice: null,
-    balance: Config.START_BALANCE,
-  };
-
-  const outcomeObj = {
-    outcome: null,
-    win: 0,
-  };
-  
   const [outcome, setOutcome] = useState(choiceObj);
   const [result, setResult] = useState(outcomeObj);
   const [collect, setCollect] = useState(false);
@@ -59,6 +46,11 @@ export const Game = () => {
 
   const collectWin = () => setCollect(true);
 
+  const onCollectDone = (balance) => {
+    setCollect(false);
+    setOutcome({ ...choiceObj, balance: balance });
+  };
+
   const playOutcome = () => {
     if (!result.outcome) {
       return;
@@ -85,11 +77,14 @@ export const Game = () => {
         className="stats win-amount"
         value={result.win}
         collect={collect}
+        animTo={0}
       />
       <GameStats
         className="stats balance"
         value={outcome.balance}
         collect={collect}
+        animTo={outcome.balance + Config.ON_WIN}
+        onChange={onCollectDone}
       />
 
 			<div className="bullets"></div>
@@ -116,9 +111,6 @@ export const Game = () => {
 			  className="tumbleweed"
 			  ref={elem => weed = elem}
 			 ></div>
-
-    <span>{test}</span>
-
 		</div>
 	);
 };
