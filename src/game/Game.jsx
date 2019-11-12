@@ -35,8 +35,8 @@ export const Game = () => {
 
   const shoot = () => {
     const rand = Math.floor(Math.random() * 10) + 1;
-    const outcome = (rand > 5) ? 'won' : 'lost';
-    const win = (rand > 5) ? Config.ON_WIN : 0;
+    const outcome = (rand > 2) ? 'won' : 'lost';
+    const win = (rand > 2) ? Config.ON_WIN : 0;
     
     setResult({
       outcome: outcome,

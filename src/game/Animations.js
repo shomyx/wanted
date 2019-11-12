@@ -1,6 +1,6 @@
 import { TweenMax, TimelineLite, Linear, Power1 } from 'gsap';
 
-let animations = new TimelineLite({ paused: true });
+let animations = new TimelineLite({ paused: true, autoRemoveChildren:true });
 
 const getFlyAwayParams = (choice) => {
   const settings = {};
@@ -35,6 +35,7 @@ export const rotateAndMove = (item, callback) => {
     }, 0)
     .to(item, 0, {
       x: 0,
+      rotation: 0,
       ease: Linear.easeNone,
       delay: 2,
       onComplete: () => {
@@ -54,7 +55,7 @@ export const flyAway = (item, choice, callback) => {
       scale: 0.3,
       ease: Linear.easeOut,
       onComplete: () => {
-        animations.stop();
+        animations.clear();
         callback();
       },
     })
@@ -75,8 +76,17 @@ export const animateNumber = (obj, toVal, update, callback) => {
   });
 };
 
+// NA OVOME MORA DA SE RADI! OVAKO NE IDE!!
+
 export const clearAnimations = (weed, hat) => {
-  animations.kill()
-    .set(weed, { clearProps: "all" })
-    .set(hat, { clearProps: "all" });
+  // animations
+  //   .set(weed, {clearProps: "all"})
+  //   .set(hat, {clearProps: "all"});
+  animations.to(hat, 0, {
+    bezier:{curviness: 3, values: [{x:0, y:0}]},
+    scale: 1,
+    rotation: 0,
+  });
+   weed.style = '';
+  hat.style = '';
 };
