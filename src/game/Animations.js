@@ -79,9 +79,6 @@ export const animateNumber = (obj, toVal, update, callback) => {
 // NA OVOME MORA DA SE RADI! OVAKO NE IDE!!
 
 export const clearAnimations = (weed, hat) => {
-  // animations
-  //   .set(weed, {clearProps: "all"})
-  //   .set(hat, {clearProps: "all"});
   animations.to(hat, 0, {
     bezier:{curviness: 3, values: [{x:0, y:0}]},
     scale: 1,

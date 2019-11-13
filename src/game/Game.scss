@@ -11,6 +11,18 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Railroad';
+  src: url('../assets/fonts/railroad-webfont.eot');
+  src: url('../assets/fonts/railroad-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../assets/fonts/railroad-webfont.woff2') format('woff2'),
+       url('../assets/fonts/railroad-webfont.woff') format('woff'),
+       url('../assets/fonts/railroad-webfont.ttf') format('truetype'),
+       url('../assets/fonts/railroad-webfont.svg#ifc_railroadbold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @keyframes spin { 
   100% {
     transform: rotate(360deg);
@@ -38,8 +50,8 @@
     top: 35px;
     width: 130px;
     text-align: center;
-    font-family: 'Arial';
-    font-size: 20px;
+    font-family: 'Railroad';
+    font-size: 25px;
     font-weight: bold;
     color: wheat;
 
