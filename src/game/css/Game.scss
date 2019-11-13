@@ -1,24 +1,25 @@
+@import "Animations.css";
 
 @font-face {
   font-family: 'Durango';
-  src: url('../assets/fonts/western.eot');
-  src: url('../assets/fonts/western.eot?#iefix') format('embedded-opentype'),
-       url('../assets/fonts/western.woff2') format('woff2'),
-       url('../assets/fonts/western.woff') format('woff'),
-       url('../assets/fonts/western.ttf') format('truetype'),
-       url('../assets/fonts/western.svg#durango_western_erodedregular') format('svg');
+  src: url('../../assets/fonts/western.eot');
+  src: url('../../assets/fonts/western.eot?#iefix') format('embedded-opentype'),
+       url('../../assets/fonts/western.woff2') format('woff2'),
+       url('../../assets/fonts/western.woff') format('woff'),
+       url('../../assets/fonts/western.ttf') format('truetype'),
+       url('../../assets/fonts/western.svg#durango_western_erodedregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Railroad';
-  src: url('../assets/fonts/railroad-webfont.eot');
-  src: url('../assets/fonts/railroad-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../assets/fonts/railroad-webfont.woff2') format('woff2'),
-       url('../assets/fonts/railroad-webfont.woff') format('woff'),
-       url('../assets/fonts/railroad-webfont.ttf') format('truetype'),
-       url('../assets/fonts/railroad-webfont.svg#ifc_railroadbold') format('svg');
+  src: url('../../assets/fonts/railroad-webfont.eot');
+  src: url('../../assets/fonts/railroad-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../../assets/fonts/railroad-webfont.woff2') format('woff2'),
+       url('../../assets/fonts/railroad-webfont.woff') format('woff'),
+       url('../../assets/fonts/railroad-webfont.ttf') format('truetype'),
+       url('../../assets/fonts/railroad-webfont.svg#ifc_railroadbold') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -40,7 +41,7 @@
 .game {
   width: 743px;
   height: 550px;
-  background: url('../assets/img/background.jpg') no-repeat;
+  background: url('../../assets/img/background.jpg') no-repeat;
   margin: auto;
   overflow: hidden;
   position: relative;
@@ -66,7 +67,7 @@
   .hat {
     width: 213px;
     height: 124px;
-    background: url('../assets/img/hat.png') no-repeat;
+    background: url('../../assets/img/hat.png') no-repeat;
     position: absolute;
     bottom: 269px;
     left: 271px;
@@ -76,7 +77,7 @@
   .tumbleweed {
     width: 180px;
     height: 180px;
-    background: url('../assets/img/wheel.png') no-repeat;
+    background: url('../../assets/img/wheel.png') no-repeat;
     position: absolute;
     bottom: 0px;
     left: 800px;
@@ -93,25 +94,24 @@
     z-index: 1;
 
     &.idle {
-      background: url('../assets/img/idle.png') no-repeat;
+      background: url('../../assets/img/idle.png') no-repeat;
     }
     &.lost {
-      background: url('../assets/img/lost.png') no-repeat;
+      background: url('../../assets/img/lost.png') no-repeat;
     }
     &.won {
-      background: url('../assets/img/won.png') no-repeat;
+      background: url('../../assets/img/won.png') no-repeat;
     }
   }
 
   .bullets {
     width: 743px;
     height: 414px;
-    background: url('../assets/img/bullet-holes.png') no-repeat;
+    background: url('../../assets/img/bullet-holes.png') no-repeat;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
-    /*display: none;*/
   }
 
   .guns {
@@ -126,11 +126,16 @@
       width: 218px;
       height: 232px;
 
+      &:hover {
+        animation: swing;
+        animation-duration: 1.5s;
+      }
+
       &.left-gun {
-        background: url('../assets/img/left.png') no-repeat;
+        background: url('../../assets/img/left.png') no-repeat;
       }
       &.right-gun {
-        background: url('../assets/img/right.png') no-repeat;
+        background: url('../../assets/img/right.png') no-repeat;
       }
     }
   }

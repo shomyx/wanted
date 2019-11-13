@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as Animations from './Animations';
 import * as Config from './Config';
 import { GameStats } from './components/GameStats';
-import './Game.scss';
+import './css/Game.scss';
 
 const choiceObj = {
   choice: null,
