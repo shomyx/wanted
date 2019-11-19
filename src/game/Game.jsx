@@ -69,15 +69,10 @@ export const Game = () => {
       Animations.flyAway(hat, outcome.choice, collectWin);
     } else {
       Animations.showBulletHoles(onLostDone);
-      // setTimeout(() => {
-      //   Animations.clearAnimations(weed, hat);
-      //   setResult({...outcomeObj})
-      // }, 4000);
     }
   };
 
   const prepareOutcome = (choice) => {
-    // Animations.animateMessage()
     const newState = { ...outcome };
 
     newState.choice = choice;
@@ -88,7 +83,7 @@ export const Game = () => {
 
 	return (
 		<div className="game">
-      <Message />
+      <Message status={result.outcome}/>
       <GameStats
         className="stats win-amount"
         value={result.win}
@@ -103,7 +98,6 @@ export const Game = () => {
         onChange={onCollectDone}
       />
 
-      {/* (result.outcome && result.outcome === 'lost') && <div className="bullets"></div> */}
 			<div className="bullets"></div>
 
 			<div

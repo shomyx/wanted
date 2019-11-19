@@ -1,6 +1,4 @@
 import React, { useState, useEffect, memo } from 'react';
-import { TweenMax, Power1 } from 'gsap';
-
 import * as Animations from '../Animations';
 
 export const GameStats = memo(({
