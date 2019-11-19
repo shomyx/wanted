@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as Animations from './Animations';
 import * as Config from './Config';
 import { GameStats } from './components/GameStats';
+import { Message } from './components/Message';
 import './css/Game.scss';
 
 const choiceObj = {
@@ -52,7 +53,12 @@ export const Game = () => {
       setCollect(false);
       setOutcome({ ...choiceObj, balance: balance });
       setResult({...outcomeObj});
-    }, 4000);
+    }, 1000);
+  };
+
+  const onLostDone = () => {
+    Animations.clearAnimations(weed, hat);
+    setResult({...outcomeObj});
   };
 
   const playOutcome = () => {
@@ -62,14 +68,16 @@ export const Game = () => {
     if (result.outcome === 'won') {
       Animations.flyAway(hat, outcome.choice, collectWin);
     } else {
-      setTimeout(() => {
-        Animations.clearAnimations(weed, hat);
-        setResult({...outcomeObj})
-      }, 4000);
+      Animations.showBulletHoles(onLostDone);
+      // setTimeout(() => {
+      //   Animations.clearAnimations(weed, hat);
+      //   setResult({...outcomeObj})
+      // }, 4000);
     }
   };
 
   const prepareOutcome = (choice) => {
+    // Animations.animateMessage()
     const newState = { ...outcome };
 
     newState.choice = choice;
@@ -80,6 +88,7 @@ export const Game = () => {
 
 	return (
 		<div className="game">
+      <Message />
       <GameStats
         className="stats win-amount"
         value={result.win}
@@ -94,7 +103,8 @@ export const Game = () => {
         onChange={onCollectDone}
       />
 
-			{ (result.outcome && result.outcome === 'lost') && <div className="bullets"></div> }
+      {/* (result.outcome && result.outcome === 'lost') && <div className="bullets"></div> */}
+			<div className="bullets"></div>
 
 			<div
         className="hat"

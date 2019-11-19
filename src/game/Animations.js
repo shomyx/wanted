@@ -1,4 +1,4 @@
-import { TweenMax, TimelineLite, Linear, Power1 } from 'gsap';
+import { TweenMax, TimelineLite, Linear, Power1, Back } from 'gsap';
 
 let animations = new TimelineLite({ paused: true, autoRemoveChildren:true });
 
@@ -33,13 +33,12 @@ export const rotateAndMove = (item, callback) => {
       x: -1000,
       ease: Linear.easeNone,
     }, 0)
-    .to(item, 0, {
+    .set(item, {
       x: 0,
       rotation: 0,
-      ease: Linear.easeNone,
       delay: 2,
       onComplete: () => {
-      	animations.clear();
+      	// animations.clear();
         callback();
       },
     })
@@ -56,7 +55,8 @@ export const flyAway = (item, choice, callback) => {
       ease: Linear.easeOut,
       onComplete: () => {
         animations.clear();
-        callback();
+        console.log("ANIMATE MESSAGE");
+        animateMessage(callback);
       },
     })
     .to(item, 1, {
@@ -65,6 +65,17 @@ export const flyAway = (item, choice, callback) => {
       ease: Linear.easeNone,
     }, 0)
     .play();
+};
+
+export const showBulletHoles = (callback) => {
+  animations
+    .set('.bullets', {
+      autoAlpha: 0,
+    })
+    .to('.bullets', 0.5, {
+      autoAlpha: 1,
+      onComplete: () => animateMessage(callback),
+    });
 };
 
 export const animateNumber = (obj, toVal, update, callback) => {
@@ -76,14 +87,53 @@ export const animateNumber = (obj, toVal, update, callback) => {
   });
 };
 
+export const animateMessage = (callback) => {
+  animations
+    .set('.message-wrap', {
+      autoAlpha: 0,
+    })
+    .set('.message', {
+      scale: 0.2, 
+      autoAlpha: 0,
+    })
+    .to('.message-wrap', 0.5, {
+      autoAlpha: 1,
+    })
+    .to('.message', 0.6, {
+      scale: 1, 
+      autoAlpha: 1,
+      ease: Back.easeOut.config(4),
+    }, '-=0.5')
+    .to('.message-wrap', 0.5, {
+      autoAlpha: 0,
+      // delay: 3,
+    }, '+=3')
+    .to('.message', 0.5, {
+      scale: 0.2, 
+      autoAlpha: 0,
+      ease: Linear.easeNone,
+      // delay: 3,
+      onComplete: () => {
+        console.log("DO STUFF");
+        callback();
+      },
+    }, '-=0.5')
+    .play();
+};
+
 // NA OVOME MORA DA SE RADI! OVAKO NE IDE!!
 
 export const clearAnimations = (weed, hat) => {
-  animations.to(hat, 0, {
-    bezier:{curviness: 3, values: [{x:0, y:0}]},
-    scale: 1,
-    rotation: 0,
-  });
-   weed.style = '';
+
+  animations
+    .to(hat, 0, {
+      bezier:{curviness: 3, values: [{x:0, y:0}]},
+      scale: 1,
+      rotation: 0,
+    })
+    .to('.bullets', 0.3, {
+      autoAlpha: 0,
+    });
+  weed.style = '';
   hat.style = '';
 };

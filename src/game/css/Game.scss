@@ -112,6 +112,8 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
+    visibility: hidden;
+    opacity: 0;
   }
 
   .guns {
@@ -136,6 +138,34 @@
       }
       &.right-gun {
         background: url('../../assets/img/right.png') no-repeat;
+      }
+    }
+  }
+
+  .message-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+
+    .message {
+      margin: auto;
+      z-index: 4;
+      font-family: 'Railroad';
+      font-size: 125px;
+      color: wheat;
+      opacity: 0;
+      visibility: hidden;
+
+      span {
+        display: block;
+        text-align: center;
       }
     }
   }
