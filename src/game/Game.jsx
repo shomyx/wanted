@@ -5,6 +5,8 @@ import * as Config from './Config';
 import { GameStats } from './components/GameStats';
 import { Message } from './components/Message';
 import './css/Game.scss';
+import shoot_sound from '../assets/sounds/shoot.mp3';
+import prep_sound from '../assets/sounds/prepare.mp3';
 
 const choiceObj = {
   choice: null,
@@ -16,6 +18,10 @@ const outcomeObj = {
   win: 0,
 };
 
+const shootSound = new Audio(shoot_sound);
+const prepSound = new Audio(prep_sound);
+// shootSound.load();
+
 export const Game = () => {
   const [outcome, setOutcome] = useState(choiceObj);
   const [result, setResult] = useState(outcomeObj);
@@ -26,6 +32,7 @@ export const Game = () => {
 
   useEffect(() => {
     if (outcome.choice) {
+      prepSound.play();
       Animations.rotateAndMove(weed, shoot);
     }
   }, [outcome]);
@@ -38,7 +45,7 @@ export const Game = () => {
     const rand = Math.floor(Math.random() * 10) + 1;
     const outcome = (rand > 5) ? 'won' : 'lost';
     const win = (rand > 5) ? Config.ON_WIN : 0;
-    
+    console.log(shootSound.play());
     setResult({
       outcome: outcome,
       win: win,
