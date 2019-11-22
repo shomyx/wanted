@@ -20,7 +20,6 @@ const outcomeObj = {
 
 const shootSound = new Audio(shoot_sound);
 const prepSound = new Audio(prep_sound);
-// shootSound.load();
 
 export const Game = () => {
   const [outcome, setOutcome] = useState(choiceObj);

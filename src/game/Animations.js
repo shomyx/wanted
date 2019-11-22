@@ -1,5 +1,9 @@
 import { TweenMax, TimelineLite, Linear, Power1, Back } from 'gsap';
+import win_sound from '../assets/sounds/win.mp3';
+import lose_sound from '../assets/sounds/lose.mp3';
 
+const winSound = new Audio(win_sound);
+const loseSound = new Audio(lose_sound);
 let animations = new TimelineLite({ paused: true, autoRemoveChildren:true });
 
 const getFlyAwayParams = (choice) => {
@@ -55,6 +59,7 @@ export const flyAway = (item, choice, callback) => {
       ease: Linear.easeOut,
       onComplete: () => {
         animations.clear();
+        winSound.play();
         animateMessage(callback);
       },
     })
@@ -73,7 +78,10 @@ export const showBulletHoles = (callback) => {
     })
     .to('.bullets', 0.2, {
       autoAlpha: 1,
-      onComplete: () => animateMessage(callback),
+      onComplete: () => {
+        loseSound.play();
+        animateMessage(callback);
+      },
     });
 };
 
