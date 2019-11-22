@@ -79,8 +79,10 @@ export const showBulletHoles = (callback) => {
     .to('.bullets', 0.2, {
       autoAlpha: 1,
       onComplete: () => {
-        loseSound.play();
-        animateMessage(callback);
+        setTimeout(() => {
+          loseSound.play();
+          animateMessage(callback);
+        }, 2000);
       },
     });
 };
