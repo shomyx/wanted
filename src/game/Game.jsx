@@ -51,20 +51,25 @@ export const Game = () => {
     });
   };
 
+  const cleanUpState = (balance) => {
+    const newBalance = balance ? {balance: balance} : {};
+    setOutcome({ ...choiceObj, ...newBalance });
+    setResult({...outcomeObj});
+  };
+
   const collectWin = () => setCollect(true);
 
   const onCollectDone = (balance) => {
     setTimeout(() => {
       Animations.clearAnimations(weed, hat);
       setCollect(false);
-      setOutcome({ ...choiceObj, balance: balance });
-      setResult({...outcomeObj});
+      cleanUpState(balance);
     }, 1000);
   };
 
   const onLostDone = () => {
     Animations.clearAnimations(weed, hat);
-    setResult({...outcomeObj});
+    cleanUpState();
   };
 
   const playOutcome = () => {
@@ -113,16 +118,18 @@ export const Game = () => {
 
 			<div className={`cowboy ${result.outcome ? result.outcome : 'idle'}`}></div>
 
-			<div className="guns">
-				<div
-					className="gun left-gun"
-					onClick={() => prepareOutcome('left')}
-				></div>
-				<div
-					className="gun right-gun"
-          onClick={() => prepareOutcome('right')}
-				></div>
-			</div>
+			{!outcome.choice && (
+        <div className="guns">
+    			<div
+    				className="gun left-gun"
+    				onClick={() => prepareOutcome('left')}
+    			></div>
+    			<div
+    				className="gun right-gun"
+            onClick={() => prepareOutcome('right')}
+    			></div>
+    		</div>
+      )}
 
 			<div
 			  className="tumbleweed"
