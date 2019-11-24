@@ -52,7 +52,7 @@ export const Game = () => {
   };
 
   const cleanUpState = (balance) => {
-    const newBalance = balance ? {balance: balance} : {};
+    const newBalance = {balance: balance ? balance : outcome.balance};
     setOutcome({ ...choiceObj, ...newBalance });
     setResult({...outcomeObj});
   };
