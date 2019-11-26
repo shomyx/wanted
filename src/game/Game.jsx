@@ -4,6 +4,8 @@ import * as Animations from './Animations';
 import * as Config from './Config';
 import { GameStats } from './components/GameStats';
 import { Message } from './components/Message';
+import { MessageWithAction } from './components/MessageWithAction';
+
 import './css/Game.scss';
 import shoot_sound from '../assets/sounds/shoot.mp3';
 import prep_sound from '../assets/sounds/prepare.mp3';
@@ -33,6 +35,9 @@ export const Game = () => {
     if (outcome.choice) {
       prepSound.play();
       Animations.rotateAndMove(weed, shoot);
+    }
+    if (!outcome.choice && outcome.balance === 0) {
+      checkBalance();
     }
   }, [outcome]);
 
@@ -92,9 +97,29 @@ export const Game = () => {
     setOutcome(newState);
   };
 
+  const checkBalance = () => {
+    console.log("STANJE JE", outcome);
+    if (outcome.balance === 0) {
+      console.log("BLAAAAAAAAAA");
+      Animations.animateMessageIn();
+    }
+  };
+
+  const refillBalance = () => {
+    setOutcome({ ...outcome, balance: Config.START_BALANCE });
+    Animations.animateMessageOut();
+  };
+
 	return (
 		<div className="game">
+      <MessageWithAction
+        label="ADD CREDITS"
+        message="You lost all your credits. Click the button below to refill your balance."
+        action={refillBalance}
+      />
+
       <Message status={result.outcome}/>
+
       <GameStats
         className="stats win-amount"
         value={result.win}

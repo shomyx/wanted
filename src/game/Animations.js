@@ -125,6 +125,39 @@ export const animateMessage = (callback) => {
     .play();
 };
 
+export const animateMessageIn = () => {
+  animations
+    .set('.message-action', {
+      autoAlpha: 0,
+    })
+    .set('.action-wrap', {
+      scale: 0.2, 
+      autoAlpha: 0,
+    })
+    .to('.message-action', 0.5, {
+      autoAlpha: 1,
+    })
+    .to('.action-wrap', 0.6, {
+      scale: 1, 
+      autoAlpha: 1,
+      ease: Back.easeOut.config(4),
+    }, '-=0.5')
+    .play();
+};
+
+export const animateMessageOut = () => {
+  animations
+    .to('.message-action', 0.5, {
+      autoAlpha: 0,
+    })
+    .to('.action-wrap', 0.5, {
+      scale: 0.2, 
+      autoAlpha: 0,
+      ease: Back.easeIn.config(4),
+    }, '-=0.5')
+    .play();
+};
+
 // NA OVOME MORA DA SE RADI! OVAKO NE IDE!!
 
 export const clearAnimations = (weed, hat) => {
@@ -137,7 +170,7 @@ export const clearAnimations = (weed, hat) => {
     .to('.bullets', 0.3, {
       autoAlpha: 0,
       onComplete: () => {
-        animations.clear();
+        // animations.clear();
         weed.style = '';
         hat.style = '';
       }
