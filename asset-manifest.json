@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/wanted/static/css/main.0fa8bed3.chunk.css",
+    "main.js": "/wanted/static/js/main.470b6030.chunk.js",
+    "main.js.map": "/wanted/static/js/main.470b6030.chunk.js.map",
+    "runtime-main.js": "/wanted/static/js/runtime-main.e629d7b7.js",
+    "runtime-main.js.map": "/wanted/static/js/runtime-main.e629d7b7.js.map",
+    "static/js/2.7e1a96a0.chunk.js": "/wanted/static/js/2.7e1a96a0.chunk.js",
+    "static/js/2.7e1a96a0.chunk.js.map": "/wanted/static/js/2.7e1a96a0.chunk.js.map",
+    "index.html": "/wanted/index.html",
+    "precache-manifest.0aecc7fae5b0c0b0e02efc8e1d66f6a3.js": "/wanted/precache-manifest.0aecc7fae5b0c0b0e02efc8e1d66f6a3.js",
+    "service-worker.js": "/wanted/service-worker.js",
+    "static/css/main.0fa8bed3.chunk.css.map": "/wanted/static/css/main.0fa8bed3.chunk.css.map",
+    "static/media/Game.scss": "/wanted/static/media/won.c20cf9d4.png",
+    "static/media/App.css": "/wanted/static/media/frame.0bbeff7e.png",
+    "static/media/lose.mp3": "/wanted/static/media/lose.44afdfdc.mp3",
+    "static/media/prepare.mp3": "/wanted/static/media/prepare.6b68e6d1.mp3",
+    "static/media/shoot.mp3": "/wanted/static/media/shoot.1278f802.mp3",
+    "static/media/win.mp3": "/wanted/static/media/win.89043896.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e629d7b7.js",
+    "static/js/2.7e1a96a0.chunk.js",
+    "static/css/main.0fa8bed3.chunk.css",
+    "static/js/main.470b6030.chunk.js"
+  ]
+}
