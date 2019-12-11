@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e0a52bacd175326a75f5c1d51b7be713",
+    "revision": "a082aed92dc01691166bdb36cd46124d",
     "url": "/wanted/index.html"
   },
   {
-    "revision": "8da5eb3aa5a0c917f94f",
-    "url": "/wanted/static/css/main.0fa8bed3.chunk.css"
+    "revision": "60955a5485e498d69c80",
+    "url": "/wanted/static/css/main.eb421734.chunk.css"
   },
   {
     "revision": "f228d67bcd980ef4bc2f",
     "url": "/wanted/static/js/2.7e1a96a0.chunk.js"
   },
   {
-    "revision": "8da5eb3aa5a0c917f94f",
+    "revision": "60955a5485e498d69c80",
     "url": "/wanted/static/js/main.470b6030.chunk.js"
   },
   {
@@ -44,8 +44,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/wanted/static/media/idle.afe82882.png"
   },
   {
-    "revision": "e850e7478b10774ab6f2da5afd517269",
-    "url": "/wanted/static/media/left.e850e747.png"
+    "revision": "f2d3e76c8d151dc648f870a6992a582a",
+    "url": "/wanted/static/media/left.f2d3e76c.png"
   },
   {
     "revision": "44afdfdcd2cf50379598e626604d9981",
@@ -80,8 +80,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/wanted/static/media/railroad-webfont.e9f103ce.woff2"
   },
   {
-    "revision": "cbd2fdc815aa54664af1a2fbfdb7af48",
-    "url": "/wanted/static/media/right.cbd2fdc8.png"
+    "revision": "3b0bf74872ec555646357e309fee9153",
+    "url": "/wanted/static/media/right.3b0bf748.png"
   },
   {
     "revision": "1278f802154252f297e58b307136cdf0",
