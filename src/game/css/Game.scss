@@ -102,6 +102,20 @@
     &.won {
       background: url('../../assets/img/won.png') no-repeat;
     }
+
+    &:before, &:after {
+      position: absolute;
+      left: -999999;
+      opacity: 0;
+      height: 0;
+      width: 0;
+    }
+    &:before {
+      content: url('../../assets/img/lost.png');
+    }
+    &:after {
+      content: url('../../assets/img/won.png');
+    }
   }
 
   .bullets {
