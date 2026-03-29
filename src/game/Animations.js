@@ -1,21 +1,36 @@
-import { TweenMax, TimelineLite, Linear, Power1, Back } from 'gsap';
-import win_sound from '../assets/sounds/win.mp3';
-import lose_sound from '../assets/sounds/lose.mp3';
+import gsap from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import win_sound from "../assets/sounds/win.mp3";
+import lose_sound from "../assets/sounds/lose.mp3";
+
+gsap.registerPlugin(MotionPathPlugin);
 
 const winSound = new Audio(win_sound);
 const loseSound = new Audio(lose_sound);
-let animations = new TimelineLite({ paused: true, autoRemoveChildren:true });
+let animations = gsap.timeline({ paused: true, autoRemoveChildren: true });
 
 const getFlyAwayParams = (choice) => {
   const settings = {};
 
   switch (choice) {
-    case 'left':
-      settings.path = [{x:0, y:0}, {x:100, y:-50}, {x:200, y:-80}, {x:300, y:-100}, {x:500, y:-120}];
+    case "left":
+      settings.path = [
+        { x: 0, y: 0 },
+        { x: 100, y: -50 },
+        { x: 200, y: -80 },
+        { x: 300, y: -100 },
+        { x: 500, y: -120 },
+      ];
       settings.rotation = 360;
       break;
-    case 'right':
-      settings.path = [{x:0, y:0}, {x:-100, y:-50}, {x:-200, y:-80}, {x:-300, y:-100}, {x:-500, y:-120}];
+    case "right":
+      settings.path = [
+        { x: 0, y: 0 },
+        { x: -100, y: -50 },
+        { x: -200, y: -80 },
+        { x: -300, y: -100 },
+        { x: -500, y: -120 },
+      ];
       settings.rotation = -360;
       break;
     default:
@@ -27,22 +42,28 @@ const getFlyAwayParams = (choice) => {
 };
 
 export const rotateAndMove = (item, callback) => {
-	animations
-		.to(item, 1, {
-    	repeat: -1,
-    	rotation: -360,
-    	ease: Linear.easeNone
-  	})
-  	.to(item, 5, {
-      x: -1000,
-      ease: Linear.easeNone,
-    }, 0)
+  animations
+    .to(item, {
+      duration: 1,
+      repeat: -1,
+      rotation: -360,
+      ease: "none",
+    })
+    .to(
+      item,
+      {
+        duration: 5,
+        x: -1000,
+        ease: "none",
+      },
+      0, // position parameter stays after the vars object
+    )
     .set(item, {
       x: 0,
       rotation: 0,
       delay: 2,
       onComplete: () => {
-      	animations.clear();
+        animations.clear();
         callback();
       },
     })
@@ -53,30 +74,40 @@ export const flyAway = (item, choice, callback) => {
   const params = getFlyAwayParams(choice);
 
   animations
-    .to(item, 1.5, {
-      bezier:{curviness: 3, values: params.path},
+    .to(item, {
+      duration: 1.5,
+      motionPath: {
+        curviness: 3,
+        path: params.path,
+      },
       scale: 0.3,
-      ease: Linear.easeOut,
+      ease: "linear",
       onComplete: () => {
         animations.clear();
         winSound.play();
         animateMessage(callback);
       },
     })
-    .to(item, 1, {
-      repeat: -1,
-      rotation: params.rotation,
-      ease: Linear.easeNone,
-    }, 0)
+    .to(
+      item,
+      {
+        duration: 1,
+        repeat: -1,
+        rotation: params.rotation,
+        ease: "none",
+      },
+      0,
+    )
     .play();
 };
 
 export const showBulletHoles = (callback) => {
   animations
-    .set('.bullets', {
+    .set(".bullets", {
       autoAlpha: 0,
     })
-    .to('.bullets', 0.2, {
+    .to(".bullets", {
+      duration: 0.2,
       autoAlpha: 1,
       onComplete: () => {
         setTimeout(() => {
@@ -88,73 +119,102 @@ export const showBulletHoles = (callback) => {
 };
 
 export const animateNumber = (obj, toVal, update, callback) => {
-  TweenMax.to(obj, 2, {
+  gsap.to(obj, {
+    duration: 2,
     val: toVal,
     onUpdate: () => update(obj.val.toFixed(0)),
-    ease: Power1.easeOut,
+    ease: "power1.out",
     onComplete: () => callback && callback(toVal),
   });
 };
 
 export const animateMessage = (callback) => {
   animations
-    .set('.message-wrap', {
+    .set(".message-wrap", {
       autoAlpha: 0,
     })
-    .set('.message', {
-      scale: 0.2, 
+    .set(".message", {
+      scale: 0.2,
       autoAlpha: 0,
     })
-    .to('.message-wrap', 0.5, {
+    .to(".message-wrap", {
+      duration: 0.5,
       autoAlpha: 1,
     })
-    .to('.message', 0.6, {
-      scale: 1, 
-      autoAlpha: 1,
-      ease: Back.easeOut.config(4),
-    }, '-=0.5')
-    .to('.message-wrap', 0.5, {
-      autoAlpha: 0,
-    }, '+=3')
-    .to('.message', 0.5, {
-      scale: 0.2, 
-      autoAlpha: 0,
-      ease: Back.easeIn.config(4),
-      onComplete: () => callback(),
-    }, '-=0.5')
+    .to(
+      ".message",
+      {
+        duration: 0.6,
+        scale: 1,
+        autoAlpha: 1,
+        ease: "back.out(4)",
+      },
+      "-=0.5",
+    )
+    .to(
+      ".message-wrap",
+      {
+        duration: 0.5,
+        autoAlpha: 0,
+      },
+      "+=3",
+    )
+    .to(
+      ".message",
+      {
+        duration: 0.5,
+        scale: 0.2,
+        autoAlpha: 0,
+        ease: "back.in(4)",
+        onComplete: () => callback(),
+      },
+      "-=0.5",
+    )
     .play();
 };
 
 export const animateMessageIn = () => {
   animations
-    .set('.message-action', {
+    .set(".message-action", {
       autoAlpha: 0,
     })
-    .set('.action-wrap', {
-      scale: 0.2, 
+    .set(".action-wrap", {
+      scale: 0.2,
       autoAlpha: 0,
     })
-    .to('.message-action', 0.5, {
+    .to(".message-action", {
+      duration: 0.5,
       autoAlpha: 1,
     })
-    .to('.action-wrap', 0.6, {
-      scale: 1, 
-      autoAlpha: 1,
-      ease: Back.easeOut.config(4),
-    }, '-=0.5')
+    .to(
+      ".action-wrap",
+      {
+        duration: 0.6,
+        scale: 1,
+        autoAlpha: 1,
+        ease: "back.out(4)",
+      },
+      "-=0.5",
+    )
     .play();
 };
 
 export const animateMessageOut = () => {
   animations
-    .to('.message-action', 0.5, {
+    .to(".message-action", {
+      duration: 0.5,
       autoAlpha: 0,
     })
-    .to('.action-wrap', 0.5, {
-      scale: 0.2, 
-      autoAlpha: 0,
-      ease: Back.easeIn.config(4),
-    }, '-=0.5')
+    .to(
+      ".action-wrap",
+      {
+        duration: 0.5,
+        scale: 0.2,
+        autoAlpha: 0,
+        ease: "back.in(4)",
+      },
+      "-=0.5",
+    )
     .play();
 };
 
@@ -162,17 +222,21 @@ export const animateMessageOut = () => {
 
 export const clearAnimations = (weed, hat) => {
   animations
-    .to(hat, 0, {
-      bezier:{curviness: 3, values: [{x:0, y:0}]},
+    .set(hat, {
+      motionPath: {
+        curviness: 3,
+        path: [{ x: 0, y: 0 }],
+      },
       scale: 1,
       rotation: 0,
     })
-    .to('.bullets', 0.3, {
+    .to(".bullets", {
+      duration: 0.3,
       autoAlpha: 0,
       onComplete: () => {
         // animations.clear();
-        weed.style = '';
-        hat.style = '';
-      }
+        weed.style = "";
+        hat.style = "";
+      },
     });
 };

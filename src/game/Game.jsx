@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
-import * as Animations from './Animations';
-import * as Config from './Config';
-import { GameStats } from './components/GameStats';
-import { Message } from './components/Message';
-import { MessageWithAction } from './components/MessageWithAction';
+import * as Animations from "./Animations";
+import * as Config from "./Config";
+import { GameStats } from "./components/GameStats";
+import { Message } from "./components/Message";
+import { MessageWithAction } from "./components/MessageWithAction";
 
-import './css/Game.scss';
-import shoot_sound from '../assets/sounds/shoot.mp3';
-import prep_sound from '../assets/sounds/prepare.mp3';
+import "./css/Game.scss";
+import shoot_sound from "../assets/sounds/shoot.mp3";
+import prep_sound from "../assets/sounds/prepare.mp3";
 
 const choiceObj = {
   choice: null,
@@ -47,8 +47,8 @@ export const Game = () => {
 
   const shoot = () => {
     const rand = Math.floor(Math.random() * 10) + 1;
-    const outcome = (rand > 5) ? 'won' : 'lost';
-    const win = (rand > 5) ? Config.ON_WIN : 0;
+    const outcome = rand > 5 ? "won" : "lost";
+    const win = rand > 5 ? Config.ON_WIN : 0;
     console.log(shootSound.play());
     setResult({
       outcome: outcome,
@@ -57,9 +57,9 @@ export const Game = () => {
   };
 
   const cleanUpState = (balance) => {
-    const newBalance = {balance: balance ? balance : outcome.balance};
+    const newBalance = { balance: balance ? balance : outcome.balance };
     setOutcome({ ...choiceObj, ...newBalance });
-    setResult({...outcomeObj});
+    setResult({ ...outcomeObj });
   };
 
   const collectWin = () => setCollect(true);
@@ -81,7 +81,7 @@ export const Game = () => {
     if (!result.outcome) {
       return;
     }
-    if (result.outcome === 'won') {
+    if (result.outcome === "won") {
       Animations.flyAway(hat, outcome.choice, collectWin);
     } else {
       Animations.showBulletHoles(onLostDone);
@@ -110,15 +110,15 @@ export const Game = () => {
     Animations.animateMessageOut();
   };
 
-	return (
-		<div className="game">
+  return (
+    <div className="game">
       <MessageWithAction
         label="ADD CREDITS"
         message="You lost all your credits. Click the button below to refill your balance."
         action={refillBalance}
       />
 
-      <Message status={result.outcome}/>
+      <Message status={result.outcome} />
 
       <GameStats
         className="stats win-amount"
@@ -134,32 +134,28 @@ export const Game = () => {
         onChange={onCollectDone}
       />
 
-			<div className="bullets"></div>
+      <div className="bullets"></div>
 
-			<div
-        className="hat"
-        ref={elem => hat = elem}
+      <div className="hat" ref={(elem) => (hat = elem)}></div>
+
+      <div
+        className={`cowboy ${result.outcome ? result.outcome : "idle"}`}
       ></div>
 
-			<div className={`cowboy ${result.outcome ? result.outcome : 'idle'}`}></div>
-
-			{!outcome.choice && (
+      {!outcome.choice && (
         <div className="guns">
-    			<div
-    				className="gun left-gun"
-    				onClick={() => prepareOutcome('left')}
-    			></div>
-    			<div
-    				className="gun right-gun"
-            onClick={() => prepareOutcome('right')}
-    			></div>
-    		</div>
+          <div
+            className="gun left-gun"
+            onClick={() => prepareOutcome("left")}
+          ></div>
+          <div
+            className="gun right-gun"
+            onClick={() => prepareOutcome("right")}
+          ></div>
+        </div>
       )}
 
-			<div
-			  className="tumbleweed"
-			  ref={elem => weed = elem}
-			 ></div>
-		</div>
-	);
+      <div className="tumbleweed" ref={(elem) => (weed = elem)}></div>
+    </div>
+  );
 };
