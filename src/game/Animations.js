@@ -111,11 +111,13 @@ export const showBulletHoles = (callback) => {
       autoAlpha: 1,
       onComplete: () => {
         setTimeout(() => {
+          animations.clear();
           loseSound.play();
           animateMessage(callback);
         }, 2000);
       },
-    });
+    })
+    .play();
 };
 
 export const animateNumber = (obj, toVal, update, callback) => {
@@ -221,6 +223,8 @@ export const animateMessageOut = () => {
 // NA OVOME MORA DA SE RADI! OVAKO NE IDE!!
 
 export const clearAnimations = (weed, hat) => {
+  animations.clear();
+
   animations
     .set(hat, {
       motionPath: {
@@ -229,12 +233,14 @@ export const clearAnimations = (weed, hat) => {
       },
       scale: 1,
       rotation: 0,
+      clearProps: "all",
     })
+    .set(weed, { clearProps: "all" })
     .to(".bullets", {
       duration: 0.3,
       autoAlpha: 0,
       onComplete: () => {
-        // animations.clear();
+        animations.clear();
         weed.style = "";
         hat.style = "";
       },

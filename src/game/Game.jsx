@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 import * as Animations from "./Animations";
 import * as Config from "./Config";
@@ -10,105 +10,119 @@ import "./css/Game.scss";
 import shoot_sound from "../assets/sounds/shoot.mp3";
 import prep_sound from "../assets/sounds/prepare.mp3";
 
-const choiceObj = {
+const INITIAL_CHOICE_STATE = {
   choice: null,
   balance: Config.START_BALANCE,
 };
 
-const outcomeObj = {
+const INITIAL_OUTCOME_STATE = {
   outcome: null,
   win: 0,
 };
 
-const shootSound = new Audio(shoot_sound);
-const prepSound = new Audio(prep_sound);
-
 export const Game = () => {
-  const [outcome, setOutcome] = useState(choiceObj);
-  const [result, setResult] = useState(outcomeObj);
+  const [outcome, setOutcome] = useState(INITIAL_CHOICE_STATE);
+  const [result, setResult] = useState(INITIAL_OUTCOME_STATE);
   const [collect, setCollect] = useState(false);
 
-  let weed = useRef(null);
-  let hat = useRef(null);
+  const weedRef = useRef(null);
+  const hatRef = useRef(null);
+
+  const shootSoundRef = useRef(null);
+  const prepSoundRef = useRef(null);
 
   useEffect(() => {
-    if (outcome.choice) {
-      prepSound.play();
-      Animations.rotateAndMove(weed, shoot);
-    }
-    if (!outcome.choice && outcome.balance === 0) {
-      checkBalance();
-    }
-  }, [outcome]);
+    shootSoundRef.current = new Audio(shoot_sound);
+    prepSoundRef.current = new Audio(prep_sound);
 
-  useEffect(() => {
-    playOutcome();
-  }, [result]);
+    return () => {
+      shootSoundRef.current = null;
+      prepSoundRef.current = null;
+    };
+  }, []);
 
-  const shoot = () => {
-    const rand = Math.floor(Math.random() * 10) + 1;
-    const outcome = rand > 5 ? "won" : "lost";
-    const win = rand > 5 ? Config.ON_WIN : 0;
-    console.log(shootSound.play());
-    setResult({
-      outcome: outcome,
-      win: win,
+  const shoot = useCallback(() => {
+    shootSoundRef.current?.play();
+
+    setResult(() => {
+      const rand = Math.floor(Math.random() * 10) + 1;
+
+      return {
+        outcome: rand > 5 ? "won" : "lost",
+        win: rand > 5 ? Config.ON_WIN : 0,
+      };
     });
-  };
+  }, []);
 
-  const cleanUpState = (balance) => {
-    const newBalance = { balance: balance ? balance : outcome.balance };
-    setOutcome({ ...choiceObj, ...newBalance });
-    setResult({ ...outcomeObj });
-  };
+  const cleanUpState = useCallback(
+    (balance) => {
+      const newBalance = { balance: balance ?? outcome.balance };
+      setOutcome({ ...INITIAL_CHOICE_STATE, ...newBalance });
+      setResult({ ...INITIAL_OUTCOME_STATE });
+    },
+    [outcome.balance],
+  );
 
-  const collectWin = () => setCollect(true);
+  const collectWin = useCallback(() => setCollect(true), []);
 
-  const onCollectDone = (balance) => {
-    setTimeout(() => {
-      Animations.clearAnimations(weed, hat);
-      setCollect(false);
-      cleanUpState(balance);
-    }, 1000);
-  };
+  const onCollectDone = useCallback(
+    (balance) => {
+      setTimeout(() => {
+        Animations.clearAnimations(weedRef.current, hatRef.current);
+        setCollect(false);
+        cleanUpState(balance);
+      }, 1000);
+    },
+    [cleanUpState],
+  );
 
-  const onLostDone = () => {
-    Animations.clearAnimations(weed, hat);
+  const onLostDone = useCallback(() => {
+    Animations.clearAnimations(weedRef.current, hatRef.current);
     cleanUpState();
-  };
+  }, [cleanUpState]);
 
-  const playOutcome = () => {
-    if (!result.outcome) {
-      return;
-    }
+  const playOutcome = useCallback(() => {
+    if (!result.outcome) return;
+
     if (result.outcome === "won") {
-      Animations.flyAway(hat, outcome.choice, collectWin);
+      Animations.flyAway(hatRef.current, outcome.choice, collectWin);
     } else {
       Animations.showBulletHoles(onLostDone);
     }
-  };
+  }, [result.outcome, outcome.choice, collectWin, onLostDone]);
 
-  const prepareOutcome = (choice) => {
-    const newState = { ...outcome };
-
-    newState.choice = choice;
-    newState.balance = newState.balance - Config.ROUND_FEE;
-
-    setOutcome(newState);
-  };
-
-  const checkBalance = () => {
+  const checkBalance = useCallback(() => {
     console.log("STANJE JE", outcome);
     if (outcome.balance === 0) {
-      console.log("BLAAAAAAAAAA");
       Animations.animateMessageIn();
     }
-  };
+  }, [outcome.balance]);
 
-  const refillBalance = () => {
-    setOutcome({ ...outcome, balance: Config.START_BALANCE });
+  const prepareOutcome = useCallback((choice) => {
+    setOutcome((prev) => ({
+      ...prev,
+      choice: choice,
+      balance: prev.balance - Config.ROUND_FEE,
+    }));
+  }, []);
+
+  const refillBalance = useCallback(() => {
+    setOutcome((prev) => ({ ...prev, balance: Config.START_BALANCE }));
     Animations.animateMessageOut();
-  };
+  }, []);
+
+  useEffect(() => {
+    if (outcome.choice) {
+      prepSoundRef.current?.play();
+      Animations.rotateAndMove(weedRef.current, shoot);
+    } else if (outcome.balance === 0) {
+      checkBalance();
+    }
+  }, [outcome.choice, outcome.balance, shoot, checkBalance]);
+
+  useEffect(() => {
+    playOutcome();
+  }, [playOutcome]);
 
   return (
     <div className="game">
@@ -134,28 +148,26 @@ export const Game = () => {
         onChange={onCollectDone}
       />
 
-      <div className="bullets"></div>
+      <div className="bullets" />
 
-      <div className="hat" ref={(elem) => (hat = elem)}></div>
+      <div className="hat" ref={hatRef} />
 
-      <div
-        className={`cowboy ${result.outcome ? result.outcome : "idle"}`}
-      ></div>
+      <div className={`cowboy ${result.outcome ? result.outcome : "idle"}`} />
 
       {!outcome.choice && (
         <div className="guns">
           <div
             className="gun left-gun"
             onClick={() => prepareOutcome("left")}
-          ></div>
+          />
           <div
             className="gun right-gun"
             onClick={() => prepareOutcome("right")}
-          ></div>
+          />
         </div>
       )}
 
-      <div className="tumbleweed" ref={(elem) => (weed = elem)}></div>
+      <div className="tumbleweed" ref={weedRef} />
     </div>
   );
 };
